@@ -65,7 +65,7 @@ std::string GenericUI::getSelect(std::vector<std::string> list)
 	return window;
 }
 
-std::string GenericUI::getMenu(const std::string &name, int select, const std::string &mdata) const
+std::string GenericUI::getMenu(std::string name, int select, std::string mdata, bool playing)
 {
 	std::string window;
 	std::string t;
@@ -201,6 +201,14 @@ std::string GenericUI::getMenu(const std::string &name, int select, const std::s
 			{
 				window += mdata;
 				c += mdata.length();
+			} else if (r == 3 && c == int((this->cols * 0.5) - (std::string("Playing").length() * 0.5)) && playing)
+			{
+				window += "Playing";
+				c += std::string("Playing").length();
+			} else if (r == 3 && c == int((this->cols * 0.5) - (std::string("Paused").length() * 0.5)) && !playing)
+			{
+				window += "Paused";
+				c += std::string("Paused").length();
 			}
 
 			window += t;
@@ -212,17 +220,17 @@ std::string GenericUI::getMenu(const std::string &name, int select, const std::s
 
 int GenericUI::getRows()
 {
-	return 0;
+	return this->rows;
 }
 
 int GenericUI::getCols()
 {
-	return 0;
+	return this->cols;
 }
 
 void GenericUI::setRows(int rows)
 {
-	this->rows = rows;
+	this->rows = rows - 2;
 }
 
 void GenericUI::setCols(int cols)

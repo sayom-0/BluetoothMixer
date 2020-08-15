@@ -12,9 +12,9 @@
 class GenericUI
 {
 private:
-	int rows, cols;
+	int rows{}, cols{};
 public:
-	std::string getMenu(const std::string &name, int select, const std::string &mdata) const;
+	std::string getMenu(std::string name, int select, std::string mdata, bool playing);
 
 	std::string getSelect(std::vector<std::string> list);
 

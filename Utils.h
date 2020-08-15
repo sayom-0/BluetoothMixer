@@ -15,8 +15,6 @@ public:
 
 	static std::string exec(std::string);
 
-	static void cZero();
-
 	static int getch2();
 };
 

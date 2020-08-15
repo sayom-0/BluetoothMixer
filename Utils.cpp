@@ -7,6 +7,10 @@
 #include <unistd.h>
 #include <termios.h>
 
+class const_iterator;
+
+class const_iterator;
+
 std::string Utils::exec(std::string cmd)
 {
 
@@ -59,9 +63,4 @@ int Utils::getch2()
 	ch = getchar();
 	tcsetattr(STDIN_FILENO, TCSANOW, &oldattr);
 	return ch;
-}
-
-void Utils::cZero()
-{
-	printf("\033[%d;%dH", 0 + 1, 0 + 1);
 }
