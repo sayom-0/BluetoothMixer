@@ -26,6 +26,8 @@ public:
 	static void previous(std::string macadr);
 
 	static void next(std::string macadr);
+
+	static std::string trackInfo(std::string macadr);
 };
 
 

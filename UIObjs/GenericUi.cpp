@@ -65,7 +65,7 @@ std::string GenericUI::getSelect(std::vector<std::string> list)
 	return window;
 }
 
-std::string GenericUI::getMenu(std::string name, int select)
+std::string GenericUI::getMenu(const std::string &name, int select, const std::string &mdata) const
 {
 	std::string window;
 	std::string t;
@@ -197,6 +197,10 @@ std::string GenericUI::getMenu(std::string name, int select)
 			{
 				window += name;
 				c += name.length();
+			} else if (r == int(this->rows * 0.8) && c == int((this->cols * 0.5) - mdata.length()))
+			{
+				window += mdata;
+				c += mdata.length();
 			}
 
 			window += t;

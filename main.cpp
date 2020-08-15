@@ -13,7 +13,7 @@ int main()
 	bool playing = false;
 	bool r = true;
 	int screen = 0; // 0 is select, 1 is menu
-	int selected = 1; // 0 is last, 1 is play/pause, 2 is next;
+	int selected = 1; //-1 will select sub audio source for device,  0 is last, 1 is play/pause, 2 is next;
 	std::vector<std::string> names, macs;
 	std::string elist = ShellExec::list();
 	std::string cmac;
@@ -56,7 +56,7 @@ int main()
 				ShellExec::connect(macs[i - 1]);
 				std::system("clear");
 				cname = names[i - 1].substr(0, names[i - 1].find("(") - 1);
-				std::cout << MUI.getMenu(cname, selected);
+				std::cout << MUI.getMenu(cname, selected, ShellExec::trackInfo(cmac));
 				screen = 1;
 			}
 		} else if (screen == 1)
@@ -101,16 +101,24 @@ int main()
 				{
 					ShellExec::next(cmac);
 				}
-			} else if (input == (27, 91, 68))
+			} else if (input == (27, 91, 68))//left
 			{
 				selected--;
+				if (selected < 0)
+				{
+					selected = 0;
+				}
 				std::system("clear");
-				std::cout << MUI.getMenu(cname, selected);
-			} else if (input == (27, 91, 67))
+				std::cout << MUI.getMenu(cname, selected, ShellExec::trackInfo(cmac));
+			} else if (input == (27, 91, 67))//right
 			{
 				selected++;
+				if (selected > 2)
+				{
+					selected = 2;
+				}
 				std::system("clear");
-				std::cout << MUI.getMenu(cname, selected);
+				std::cout << MUI.getMenu(cname, selected, ShellExec::trackInfo(cmac));
 			}
 		}
 	}
