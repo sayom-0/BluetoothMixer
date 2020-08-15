@@ -1,0 +1,3 @@
+/home/sjet/CLionProjects/BMGitProject/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/sjet/CLionProjects/BMGitProject/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/sjet/CLionProjects/BMGitProject/cmake-build-debug/CMakeFiles/BluetoothMixer.dir
