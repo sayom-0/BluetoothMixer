@@ -193,11 +193,11 @@ std::string GenericUI::getMenu(const std::string &name, int select, const std::s
 				{
 					t = 'O';
 				}
-			} else if (r == 1 && c == int((this->cols * 0.5) - name.length()))
+			} else if (r == 1 && c == int((this->cols * 0.5) - (name.length() * 0.5)))
 			{
 				window += name;
 				c += name.length();
-			} else if (r == int(this->rows * 0.8) && c == int((this->cols * 0.5) - mdata.length()))
+			} else if (r == int(this->rows * 0.8) && c == int((this->cols * 0.5) - (mdata.length() * 0.5)))
 			{
 				window += mdata;
 				c += mdata.length();

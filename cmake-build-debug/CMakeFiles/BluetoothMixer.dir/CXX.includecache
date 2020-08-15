@@ -6,20 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/sjet/CLionProjects/BMGitProject/ShellExec.cpp
-zconf.h
--
-algorithm
--
-ShellExec.h
-/home/sjet/CLionProjects/BMGitProject/ShellExec.h
-Utils.h
-/home/sjet/CLionProjects/BMGitProject/Utils.h
-
-/home/sjet/CLionProjects/BMGitProject/ShellExec.h
-string
--
-
 /home/sjet/CLionProjects/BMGitProject/UIObjs/GenericUi.cpp
 iostream
 -
@@ -30,31 +16,5 @@ GenericUi.h
 string
 -
 vector
--
-
-/home/sjet/CLionProjects/BMGitProject/Utils.cpp
-Utils.h
-/home/sjet/CLionProjects/BMGitProject/Utils.h
-unistd.h
--
-termios.h
--
-
-/home/sjet/CLionProjects/BMGitProject/Utils.h
-string
--
-
-/home/sjet/CLionProjects/BMGitProject/main.cpp
-iostream
--
-vector
--
-Utils.h
-/home/sjet/CLionProjects/BMGitProject/Utils.h
-UIObjs/GenericUi.h
-/home/sjet/CLionProjects/BMGitProject/UIObjs/GenericUi.h
-ShellExec.h
-/home/sjet/CLionProjects/BMGitProject/ShellExec.h
-boost/tokenizer.hpp
 -
 
