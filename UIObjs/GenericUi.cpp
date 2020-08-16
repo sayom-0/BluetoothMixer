@@ -65,7 +65,9 @@ std::string GenericUI::getSelect(std::vector<std::string> list)
 	return window;
 }
 
-std::string GenericUI::getMenu(std::string name, int select, std::string mdata, bool playing)
+std::string
+GenericUI::getMenu(std::string name, int select, std::string mdata, bool playing, std::string time, std::string ctime,
+				   double progress)
 {
 	std::string window;
 	std::string t;
@@ -201,6 +203,32 @@ std::string GenericUI::getMenu(std::string name, int select, std::string mdata, 
 			{
 				window += mdata;
 				c += mdata.length();
+			} else if (r == int(this->rows * 0.85) && c == int(this->cols * 0.1))
+			{
+				window += "|";
+				int slots = int(this->cols * 0.1) - int(this->cols * 0.9);
+				slots *= -1;
+				slots += int(this->cols * 0.1) * 2;
+				for (; c != int(this->cols * 0.9); c++)
+				{
+					if (c == int(slots * progress))
+					{
+						window += 'O';
+					} else
+					{
+						window += "-";
+					}
+				}
+				c += 2;
+				window += "|";
+			} else if (r == int(this->rows * 0.85) + 1 && c == int(this->cols * 0.1))
+			{
+				window += ctime;
+				c += ctime.length();
+			} else if (r == int(this->rows * 0.85) + 1 && c == int(this->cols * 0.9))
+			{
+				window += time;
+				c += time.length();
 			} else if (r == 3 && c == int((this->cols * 0.5) - (std::string("Playing").length() * 0.5)) && playing)
 			{
 				window += "Playing";

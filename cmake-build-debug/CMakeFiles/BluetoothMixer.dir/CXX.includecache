@@ -6,15 +6,33 @@
 
 #IncludeRegexTransform: 
 
-/home/sjet/CLionProjects/BMGitProject/UIObjs/GenericUi.cpp
-iostream
+/home/sjet/CLionProjects/BMGitProject/ShellExec.h
+string
 -
-GenericUi.h
-/home/sjet/CLionProjects/BMGitProject/UIObjs/GenericUi.h
 
 /home/sjet/CLionProjects/BMGitProject/UIObjs/GenericUi.h
 string
 -
 vector
+-
+
+/home/sjet/CLionProjects/BMGitProject/Utils.h
+string
+-
+
+/home/sjet/CLionProjects/BMGitProject/main.cpp
+iostream
+-
+vector
+-
+Utils.h
+/home/sjet/CLionProjects/BMGitProject/Utils.h
+UIObjs/GenericUi.h
+/home/sjet/CLionProjects/BMGitProject/UIObjs/GenericUi.h
+ShellExec.h
+/home/sjet/CLionProjects/BMGitProject/ShellExec.h
+boost/tokenizer.hpp
+-
+thread
 -
 

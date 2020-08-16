@@ -14,7 +14,9 @@ class GenericUI
 private:
 	int rows{}, cols{};
 public:
-	std::string getMenu(std::string name, int select, std::string mdata, bool playing);
+	std::string
+	getMenu(std::string name, int select, std::string mdata, bool playing, std::string time, std::string ctime,
+			double progress);
 
 	std::string getSelect(std::vector<std::string> list);
 

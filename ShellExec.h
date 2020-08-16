@@ -10,8 +10,6 @@
 
 class ShellExec
 {
-private:
-	std::string macadr;
 public:
 	static void play(std::string);
 
@@ -28,6 +26,16 @@ public:
 	static void next(std::string macadr);
 
 	static std::string trackInfo(std::string macadr);
+
+	static std::string getTotalTime(std::string macadr);
+
+	static bool getStatus(std::string macadr);
+
+	static std::string getCurrentTime(std::string macadr);
+
+	static double getRawTotalTime(std::string macadr);
+
+	static double getRawCurrentTime(std::string macadr);
 };
 
 
