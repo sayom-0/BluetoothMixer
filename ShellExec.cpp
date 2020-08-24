@@ -160,3 +160,68 @@ double ShellExec::getRawCurrentTime(std::string macadr)
 	rtime /= 1000;
 	return rtime;
 }
+
+int ShellExec::getpactlID(std::string macadr)
+{
+	std::replace(macadr.begin(), macadr.end(), ':', '_');
+	std::string input = Utils::exec("pactl list sources short");
+	std::vector<std::string> srvec;
+	boost::char_separator<char> sep("\n");
+	boost::tokenizer<boost::char_separator<char>> tokens(input, sep);
+	for (const auto &t : tokens)
+	{
+		srvec.push_back(t);
+	}
+	for (int i = 0; i != srvec.size(); i++)
+	{
+		if (srvec[i].find("bluez_source." + macadr + ".a2dp_source") != -1)
+		{
+			return srvec[i].at(0) - '0';
+		}
+	}
+}
+
+void ShellExec::volUp(int ID)
+{
+	std::string cmd = "sh -c \"pactl set-source-volume " + std::to_string(ID) + " +5%\"";
+	std::system(cmd.c_str());
+}
+
+void ShellExec::volDown(int ID)
+{
+	std::string cmd = "sh -c \"pactl set-source-volume " + std::to_string(ID) + " -5%\"";
+	std::system(cmd.c_str());
+}
+
+double ShellExec::getVol(int ID)
+{
+	std::string input = Utils::exec("pactl list sources");
+	std::string search = "Source #" + std::to_string(ID);
+	bool occ = false;
+	std::vector<std::string> srvec;
+	boost::char_separator<char> sep("\n");
+	boost::tokenizer<boost::char_separator<char>> tokens(input, sep);
+	for (const auto &t : tokens)
+	{
+		srvec.push_back(t);
+	}
+	for (int i = 0; i != srvec.size(); i++)
+	{
+		if (srvec[i].find(search) != -1)
+		{
+			if (!occ)
+			{
+				for (int j = 0; j != i; j++)
+				{
+					srvec.erase(srvec.begin());
+				}
+				search = "Volume:";
+				i = 0;
+				occ = true;
+			} else
+			{
+				return std::stoi(srvec[i].substr(srvec[i].find('/') + 2, 3)) * 0.01;
+			}
+		}
+	}
+}

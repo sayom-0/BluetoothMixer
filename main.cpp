@@ -6,10 +6,10 @@
 #include <boost/tokenizer.hpp>
 #include <thread>
 
-void Monitor(GenericUI &gui, std::string &cname, int &selected, std::string &cmac, int &screen)
+[[noreturn]] void Monitor(GenericUI &gui, std::string &cname, int &selected, std::string &cmac, int &screen)
 {
 	int rows, cols;
-	while (true)
+	for (;;)
 	{
 		sleep(1);
 		if (screen == 1)
@@ -19,11 +19,23 @@ void Monitor(GenericUI &gui, std::string &cname, int &selected, std::string &cma
 			std::system("clear");
 			gui.setCols(cols);
 			gui.setRows(rows);
+			if (ShellExec::getVol(ShellExec::getpactlID(cmac)) > 1.1)
+			{
+				std::string cmd = "pactl set-source-volume " + std::to_string(ShellExec::getpactlID(cmac)) + " 1.32";
+				std::system(cmd.c_str());
+			}
+			if (ShellExec::getVol(ShellExec::getpactlID(cmac)) < 0.2)
+			{
+				std::string cmd = "pactl set-source-volume " + std::to_string(ShellExec::getpactlID(cmac)) + " 0.008";
+				std::system(cmd.c_str());
+			}
 			std::cout
 					<< gui.getMenu(cname, selected, ShellExec::trackInfo(cmac), ShellExec::getStatus(cmac),
 								   ShellExec::getTotalTime(cmac),
 								   ShellExec::getCurrentTime(cmac),
-								   ShellExec::getRawCurrentTime(cmac) / ShellExec::getRawTotalTime(cmac));
+								   ShellExec::getRawCurrentTime(cmac) / ShellExec::getRawTotalTime(cmac),
+								   ShellExec::getVol(ShellExec::getpactlID(cmac)));
+
 		}
 	}
 }
@@ -104,7 +116,8 @@ int main()
 				std::cout
 						<< MUI.getMenu(cname, selected, ShellExec::trackInfo(cmac), ShellExec::getStatus(cmac),
 									   ShellExec::getTotalTime(cmac), ShellExec::getCurrentTime(cmac),
-									   ShellExec::getRawCurrentTime(cmac) / ShellExec::getRawTotalTime(cmac));
+									   ShellExec::getRawCurrentTime(cmac) / ShellExec::getRawTotalTime(cmac),
+									   ShellExec::getVol(ShellExec::getpactlID(cmac)));
 				screen = 1;
 			}
 		} else if (screen == 1)
@@ -119,13 +132,15 @@ int main()
 					ShellExec::pause(cmac);
 					std::cout << MUI.getMenu(cname, selected, ShellExec::trackInfo(cmac), ShellExec::getStatus(cmac),
 											 ShellExec::getTotalTime(cmac), ShellExec::getCurrentTime(cmac),
-											 ShellExec::getRawCurrentTime(cmac) / ShellExec::getRawTotalTime(cmac));
+											 ShellExec::getRawCurrentTime(cmac) / ShellExec::getRawTotalTime(cmac),
+											 ShellExec::getVol(ShellExec::getpactlID(cmac)));
 				} else
 				{
 					ShellExec::play(cmac);
 					std::cout << MUI.getMenu(cname, selected, ShellExec::trackInfo(cmac), ShellExec::getStatus(cmac),
 											 ShellExec::getTotalTime(cmac), ShellExec::getCurrentTime(cmac),
-											 ShellExec::getRawCurrentTime(cmac) / ShellExec::getRawTotalTime(cmac));
+											 ShellExec::getRawCurrentTime(cmac) / ShellExec::getRawTotalTime(cmac),
+											 ShellExec::getVol(ShellExec::getpactlID(cmac)));
 				}
 			} else if (input == 'd')
 			{
@@ -148,14 +163,16 @@ int main()
 						std::cout
 								<< MUI.getMenu(cname, selected, ShellExec::trackInfo(cmac), ShellExec::getStatus(cmac),
 											   ShellExec::getTotalTime(cmac), ShellExec::getCurrentTime(cmac),
-											   ShellExec::getRawCurrentTime(cmac) / ShellExec::getRawTotalTime(cmac));
+											   ShellExec::getRawCurrentTime(cmac) / ShellExec::getRawTotalTime(cmac),
+											   ShellExec::getVol(ShellExec::getpactlID(cmac)));
 					} else
 					{
 						ShellExec::play(cmac);
 						std::cout
 								<< MUI.getMenu(cname, selected, ShellExec::trackInfo(cmac), ShellExec::getStatus(cmac),
 											   ShellExec::getTotalTime(cmac), ShellExec::getCurrentTime(cmac),
-											   ShellExec::getRawCurrentTime(cmac) / ShellExec::getRawTotalTime(cmac));
+											   ShellExec::getRawCurrentTime(cmac) / ShellExec::getRawTotalTime(cmac),
+											   ShellExec::getVol(ShellExec::getpactlID(cmac)));
 					}
 				} else if (selected == 2)
 				{
@@ -164,15 +181,16 @@ int main()
 			} else if (input == (27, 91, 68))//left
 			{
 				selected--;
-				if (selected < 0)
+				if (selected < -1)
 				{
-					selected = 0;
+					selected = -1;
 				}
 				std::system("clear");
 				std::cout
 						<< MUI.getMenu(cname, selected, ShellExec::trackInfo(cmac), ShellExec::getStatus(cmac),
 									   ShellExec::getTotalTime(cmac), ShellExec::getCurrentTime(cmac),
-									   ShellExec::getRawCurrentTime(cmac) / ShellExec::getRawTotalTime(cmac));
+									   ShellExec::getRawCurrentTime(cmac) / ShellExec::getRawTotalTime(cmac),
+									   ShellExec::getVol(ShellExec::getpactlID(cmac)));
 			} else if (input == (27, 91, 67))//right
 			{
 				selected++;
@@ -184,7 +202,26 @@ int main()
 				std::cout
 						<< MUI.getMenu(cname, selected, ShellExec::trackInfo(cmac), ShellExec::getStatus(cmac),
 									   ShellExec::getTotalTime(cmac), ShellExec::getCurrentTime(cmac),
-									   ShellExec::getRawCurrentTime(cmac) / ShellExec::getRawTotalTime(cmac));
+									   ShellExec::getRawCurrentTime(cmac) / ShellExec::getRawTotalTime(cmac),
+									   ShellExec::getVol(ShellExec::getpactlID(cmac)));
+			} else if (selected == -1 && input == (27, 91, 65))
+			{
+				ShellExec::volUp(ShellExec::getpactlID(cmac));
+				std::system("clear");
+				std::cout
+						<< MUI.getMenu(cname, selected, ShellExec::trackInfo(cmac), ShellExec::getStatus(cmac),
+									   ShellExec::getTotalTime(cmac), ShellExec::getCurrentTime(cmac),
+									   ShellExec::getRawCurrentTime(cmac) / ShellExec::getRawTotalTime(cmac),
+									   ShellExec::getVol(ShellExec::getpactlID(cmac)));
+			} else if (selected == -1 && input == (27, 91, 66))
+			{
+				ShellExec::volDown(ShellExec::getpactlID(cmac));
+				std::system("clear");
+				std::cout
+						<< MUI.getMenu(cname, selected, ShellExec::trackInfo(cmac), ShellExec::getStatus(cmac),
+									   ShellExec::getTotalTime(cmac), ShellExec::getCurrentTime(cmac),
+									   ShellExec::getRawCurrentTime(cmac) / ShellExec::getRawTotalTime(cmac),
+									   ShellExec::getVol(ShellExec::getpactlID(cmac)));
 			}
 		}
 	}

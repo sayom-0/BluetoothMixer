@@ -67,7 +67,7 @@ std::string GenericUI::getSelect(std::vector<std::string> list)
 
 std::string
 GenericUI::getMenu(std::string name, int select, std::string mdata, bool playing, std::string time, std::string ctime,
-				   double progress)
+				   double progress, double vol)
 {
 	std::string window;
 	std::string t;
@@ -206,12 +206,10 @@ GenericUI::getMenu(std::string name, int select, std::string mdata, bool playing
 			} else if (r == int(this->rows * 0.85) && c == int(this->cols * 0.1))
 			{
 				window += "|";
-				int slots = int(this->cols * 0.1) - int(this->cols * 0.9);
-				slots *= -1;
-				slots += int(this->cols * 0.1) * 2;
+				//int slots = ((int(this->cols * 0.1) - (int(this->cols * 0.9) - 1)) * -1) + int(this->cols * 0.15);
 				for (; c != int(this->cols * 0.9); c++)
 				{
-					if (c == int(slots * progress))
+					if (c == int(this->cols * progress))
 					{
 						window += 'O';
 					} else
@@ -221,7 +219,7 @@ GenericUI::getMenu(std::string name, int select, std::string mdata, bool playing
 				}
 				c += 2;
 				window += "|";
-			} else if (r == int(this->rows * 0.85) + 1 && c == int(this->cols * 0.1))
+			} else if (r == int(this->rows * 0.85) + 1 && c == int(this->cols * 0.1) - 1)
 			{
 				window += ctime;
 				c += ctime.length();
@@ -229,7 +227,35 @@ GenericUI::getMenu(std::string name, int select, std::string mdata, bool playing
 			{
 				window += time;
 				c += time.length();
-			} else if (r == 3 && c == int((this->cols * 0.5) - (std::string("Playing").length() * 0.5)) && playing)
+			} else if (r == int(this->rows * 0.1) && c == int(this->cols * 0.05))
+			{
+				if (select == -1)
+				{
+					t = '=';
+				} else
+				{
+					t = '-';
+				}
+			} else if (r > int(this->rows * 0.1) && r < int(this->rows * 0.9) && c == int(this->cols * 0.05))
+			{
+				if (r == this->rows - int((this->rows * 0.8) * vol))
+				{
+					t = 'O';
+				} else
+				{
+					t = '|';
+				}
+			} else if (r == int(this->rows * 0.9) && c == int(this->cols * 0.05))
+			{
+				if (select == -1)
+				{
+					t = '=';
+				} else
+				{
+					t = '-';
+				}
+			} else if (r == 3 && c == int((this->cols * 0.5) - (std::string("Playing").length() * 0.5)) &&
+					   playing) //Playing and paused statements should be last as they will always be true
 			{
 				window += "Playing";
 				c += std::string("Playing").length();

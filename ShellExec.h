@@ -36,6 +36,14 @@ public:
 	static double getRawTotalTime(std::string macadr);
 
 	static double getRawCurrentTime(std::string macadr);
+
+	static int getpactlID(std::string macadr);
+
+	static void volUp(int ID);
+
+	static void volDown(int ID);
+
+	static double getVol(int ID);
 };
 
 
